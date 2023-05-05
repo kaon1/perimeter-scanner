@@ -9,5 +9,5 @@
 /bin/sh -c "echo yes | ivre view --purgedb"
 /bin/sh -c "ivre scan2db --open-ports -s SCAN_SERVER -c pscan_$(cat "/ivre-opt/current_scan_date.txt") /ivre-share/$(cat "/ivre-opt/current_scan_date.txt")*.xml"
 
-#/bin/sh -c "ivre db2view --no-merge nmap --category pscan_$(cat "/ivre-opt/previous_scan_date.txt")"
+/bin/sh -c "ivre db2view --no-merge nmap --category pscan_$(cat "/ivre-opt/previous_scan_date.txt")"
 /bin/sh -c "ivre db2view --no-merge nmap --category pscan_$(cat "/ivre-opt/current_scan_date.txt")"
