@@ -38,7 +38,7 @@ nmap_base_args_udp = "nohup nmap --log-errors --open -T3 -Pn -sU --top-ports 250
 netbox_api_ip_addr = requests.get(netbox_url+"/api/ipam/ip-addresses/?limit=0&tag="+nmap_tag, headers=netbox_headers, verify=False).json()
 netbox_api_ip_prefix = requests.get(netbox_url+"/api/ipam/prefixes/?limit=0&tag="+nmap_tag, headers=netbox_headers, verify=False).json()
 
-# function to take in address like 170.149.240.128/25 and return 170_140_240_128 and netmask 25
+# function to take in address like 172.3.3.0/25 and return 172_3_3_0 and netmask 25
 def explode_address_elements(address_to_scan):
     exploded_elements_dict = {}
     exploded_elements_dict['address_to_scan_exploded'] = str(
