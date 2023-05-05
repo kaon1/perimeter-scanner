@@ -1,0 +1,40 @@
+### Initial Instructions to Get the EC2 to proper state
+
+hostname pscanner
+hostnamectl set-hostname pscanner
+yum update -y
+
+yum install nano -y
+yum install nmap -y
+yum install -y httpd-tools
+yum install -y unzip
+yum install python3 -y
+yum install -y docker-compose
+
+pip3 install requests
+pip3 install netutils
+pip3 install jinja2
+
+mkdir /opt/ivre/
+mkdir /opt/ivre/ivre-opt
+mkdir /opt/ivre/ivre-share
+mkdir /opt/pscanner-backups
+mkdir /opt/pscanner-backups/backups
+
+htpasswd -c /opt/ivre/ivre-opt/.htpasswd pscanner
+
+touch /opt/ivre/crontab_runs.log
+touch /opt/ivre/nohup.out
+
+systemctl enable docker
+systemctl start docker
+
+docker build . -t local/ivreweb
+docker-compose -f /opt/ivre/ivre-compose.yml up -d
+
+upload files/scripts
+chmod +x *.sh scripts
+
+test backup to s3
+
+

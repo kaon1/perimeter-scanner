@@ -1,0 +1,21 @@
+## Spawn all UDP and TCP Jobs
+0 06 * * 6 root /usr/bin/python3 /opt/ivre/pscan_spawn_jobs.py >> /opt/ivre/crontab_runs.log 2>&1
+
+## After 48 hours -- kill all NMAP jobs 
+0 06 * * 1 root /usr/bin/killall -9 nmap >> /opt/ivre/crontab_runs.log 2>&1
+
+## Load NMAP xml output into ivre mongo db
+1 06 * * 1 root docker exec -i ivreclient /bin/bash /ivre-opt/pscan_db_job.sh >> /opt/ivre/crontab_runs.log 2>&1
+
+## Export IVRE mongo db as readable json files for future use
+2 06 * * 1 root docker exec -i ivreclient /usr/bin/python3 /ivre-opt/export_recent_changes.py >> /opt/ivre/crontab_runs.log 2>&1
+3 06 * * 1 root docker exec -i ivreclient /usr/bin/python3 /ivre-opt/print_recent_scan.py >> /opt/ivre/crontab_runs.log 2>&1
+
+## Generate email report to send to net team
+0 16 * * 1 root /usr/bin/python3 /opt/ivre/ivre-opt/create_email_report.py >> /opt/ivre/crontab_runs.log 2>&1
+
+## backup pscanner dir daily
+0 0 * * * root /bin/bash /opt/pscanner-backup/backups.sh
+
+## delete all nmap xml output files older than 90 days
+20 0 * * * root /usr/bin/find /opt/ivre/ivre-share/*.xml -mtime +90 -exec rm {} \;

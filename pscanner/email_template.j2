@@ -1,0 +1,26 @@
+Network Perimeter Port Scanner Summary
+
+Web View: https://pscanner/
+
+IP Addresses and Prefixes Tagged for Scanning: https://netbox/
+
+---------------------------------------------------------------------------------------------------
+
+List of Open Services that are not justified:
+{% for item in output_list_no_reason %}
+IP --> {{ item['IP Address'] }} | Open_Port --> {{ item['Open Port'] }} | Reason --> {{ item['Reason'] }}
+{% endfor %}
+
+List of Changes From Previous Scan to Current Scan:
+{% for item in whats_changed_dict %}
+IP --> {{ item['ip_address'] }} | Proto --> {{ item['protocol'] }} | Port --> {{ item['port'] }} | Change --> {{ item['status'] }}
+{% endfor %}
+
+List of Current Open Services with Justifications:
+{% for item in output_list_all %}
+IP --> {{ item['IP Address'] }} | Open_Port --> {{ item['Open Port'] }} | Reason --> {{ item['Reason'] }}
+{% endfor %}
+
+---------------------------------------------------------------------------------------------------
+
+Date: "{{ date_stamp }}"
